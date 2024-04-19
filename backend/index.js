@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import {Book} from "./models/bookModel.js";
 import bodyParser from "body-parser";
 import booksRoutes from "./routes/booksRoutes.js";
+import cors from 'cors'
 
 const app = express();
 
