@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ShowBook from './ShowBook';
@@ -36,7 +36,7 @@ function Home() {
               <Link to={`/books/update/${book._id}`}>Edit</Link>
             </button>
             <button className="m-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-              Delete
+              <Link to={`/books/delete/${book._id}`}>Delete</Link>
             </button>
           </div>
           </li>
