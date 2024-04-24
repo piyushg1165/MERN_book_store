@@ -1,9 +1,75 @@
-import React from 'react'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+
+
 
 function UpdateBook() {
+
+  const [bookTitle, setBookTitle] = useState("");
+  const [bookAuthor, setBookAuthor] = useState("");
+  const [bookPublishYear, setBookPublishYear] = useState("");
+  const {id} = useParams();
+  const navigate = useNavigate();
+ 
+
+  const handleUpdate = () => {
+    const data = {
+      title: bookTitle,
+      author: bookAuthor,
+      publishYear: bookPublishYear
+    }
+    axios.put(`http://localhost:5555/books/${id}`, data)
+    .then( ()=> {
+      navigate('/');
+    } )
+    .catch(function (error) {
+      console.log(error);
+    });
+    
+  };
+  
+
+  useEffect(() => {
+      axios.get(`http://localhost:5555/books/${id}`)
+      .then( (response) => {
+        setBookTitle(response.data.title);
+        setBookAuthor(response.data.author);
+        setBookPublishYear(response.data.publishYear);
+    
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+   }, []);
+ 
+
+
   return (
-    <div>UpdateBook</div>
+    <div className='flex flex-col p-5 m-5 '>
+      <h1>Edit book -- {bookTitle}</h1>
+      <h1 className='place-self-center text-lg'>Book Title</h1>
+      <input type='text' 
+      name='booktitle'
+      className='m-2 p-2 border-solid border-2 border-sky-500'
+      value={bookTitle}
+      onChange={(e) => setBookTitle(e.target.value)}/>
+      <h1 className='place-self-center text-lg'>Book Author</h1>
+      <input type='text' 
+      name='bookauthor'
+      className='m-2 p-2 border-solid border-2 border-sky-500'
+      value={bookAuthor}
+      onChange={(e) => setBookAuthor(e.target.value)}/>
+      <h1 className='place-self-center text-lg'>Book Publish Year</h1>
+      <input type='text' 
+      name='bookyear'
+      className='m-2 p-2 border-solid border-2 border-sky-500'
+      value={bookPublishYear}
+      onChange={(e) => setBookPublishYear(e.target.value)}/>
+      <button className='text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-80 place-self-center' onClick={handleUpdate}>Submit</button>
+
+    </div>
   )
 }
 
-export default UpdateBook
+export default UpdateBook;

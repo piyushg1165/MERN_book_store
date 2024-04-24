@@ -1,5 +1,6 @@
 import express from 'express';
 import { Book } from '../models/bookModel.js';
+import { ObjectId } from 'mongodb';
 
 const router = express.Router();
 
@@ -39,6 +40,7 @@ router.post("/", async (req, res) =>{
             });
           }
           const newBook = {
+            _id: new ObjectId(),
             title: req.body.title,
             author: req.body.author,
             publishYear: req.body.publishYear
