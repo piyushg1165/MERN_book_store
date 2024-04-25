@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function CreateBook() {
 
   const [bookTitle, setBookTitle] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
   const [bookPublishYear, setBookPublishYear] = useState();
+  const navigate = useNavigate();
 
   const postBook = () => {axios.post('http://localhost:5555/books', {
     title: bookTitle,
@@ -14,6 +16,7 @@ function CreateBook() {
   })
   .then((response) => {
     console.log(response);
+    navigate('/');
   })
   .catch((error) => {
     console.log(error);

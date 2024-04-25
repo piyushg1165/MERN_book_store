@@ -19,10 +19,12 @@ function UpdateBook() {
       author: bookAuthor,
       publishYear: bookPublishYear
     }
-    axios.put(`http://localhost:5555/books/${id}`, data)
-    .then( ()=> {
+    const delayNavigation = () => {
       navigate('/');
-    } )
+    }
+    axios.put(`http://localhost:5555/books/${id}`, data)
+    .then( setTimeout(delayNavigation, 1000)
+      )
     .catch(function (error) {
       console.log(error);
     });
